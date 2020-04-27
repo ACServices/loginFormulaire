@@ -215,7 +215,11 @@ public class Inscription extends JDialog{
 	
 	private void controlButtons() {
 		JButton submit = new JButton("submit");
+//action du bouton submit
+		
+		
 		JButton cancel = new JButton("cancel");
+//		action du bouton cancel
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);

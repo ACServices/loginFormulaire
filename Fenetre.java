@@ -60,6 +60,7 @@ public class Fenetre extends JFrame{
 		splitPane.setOneTouchExpandable(false);
 		splitPane.setDividerSize(5);
 		splitPane.setDividerLocation(175);
+		
 		this.getContentPane().add(toolbar, BorderLayout.NORTH);
 		this.getContentPane().add(splitPane, BorderLayout.CENTER);
 	}
