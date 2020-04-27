@@ -5,8 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +14,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 
@@ -33,12 +32,14 @@ public class Fenetre extends JFrame{
 	private String[] titres = {"id","nom","prenom","pays","adress","email","phone"};
 	private Object[][] donnees = {
 			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{1,"Ali", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
+			{2,"Ali", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
+			{3,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
+			{4,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
+			{5,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
+			{6,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
 			};
+
+	private JSplitPane splitPane;
 	
 	public Fenetre() {
 		this.setTitle("liste des abonnes");
@@ -53,9 +54,14 @@ public class Fenetre extends JFrame{
 		tableau = new JTable(new Tableau(donnees, titres));
 		tableau.setRowHeight(35);
 		this.setJMenuBar(menuBar);
-		tableau.setBackground(new Color(231, 233, 242));
+//		tableau.setBackground(new Color(231, 233, 242));
+		
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new Arbre(), tableau);
+		splitPane.setOneTouchExpandable(false);
+		splitPane.setDividerSize(5);
+		splitPane.setDividerLocation(175);
 		this.getContentPane().add(toolbar, BorderLayout.NORTH);
-		this.getContentPane().add(tableau, BorderLayout.CENTER);
+		this.getContentPane().add(splitPane, BorderLayout.CENTER);
 	}
 
 	private void menu() {
@@ -84,9 +90,9 @@ public class Fenetre extends JFrame{
 	
 	private void toolbar() {
 	//	JButton ajouterCellule = new JButton(new ImageIcon("/home/nabirni/eclipse-workspace/formulaireInscription/src/formulaireInscription/img/ajout.png"));
-		JButton homeCellule = new JButton(new ImageIcon("/home/nabirni/eclipse-workspace/formulaireInscription/src/formulaireInscription/img/home.png"));
-		JButton playCellule = new JButton(new ImageIcon("/home/nabirni/eclipse-workspace/formulaireInscription/src/formulaireInscription/img/play.png"));
-		JButton squareCellule = new JButton(new ImageIcon("/home/nabirni/eclipse-workspace/formulaireInscription/src/formulaireInscription/img/square.png"));
+		JButton homeCellule = new JButton(new ImageIcon("/home/nabirni/eclipse-workspace/formulaireProject/img/home.png"));
+		JButton playCellule = new JButton(new ImageIcon("/home/nabirni/eclipse-workspace/formulaireProject/img/play.png"));
+		JButton squareCellule = new JButton(new ImageIcon("/home/nabirni/eclipse-workspace/formulaireProject/img/square.png"));
 		
 		toolbar.add(homeCellule);
 	//	toolbar.add(ajouterCellule);
