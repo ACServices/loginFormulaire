@@ -50,12 +50,14 @@ public class Inscription extends JDialog{
 			title();
 			initComponent();
 			controlButtons();	
+			
 			Thread t = new Thread(new Runnable() {
 				public void run() {
 					temps();
 				}
 			});
 			t.start();
+			
 			this.getContentPane().add(titre, BorderLayout.NORTH);
 			this.getContentPane().add(container, BorderLayout.CENTER);
 			this.getContentPane().add(buttonPane, BorderLayout.SOUTH);
