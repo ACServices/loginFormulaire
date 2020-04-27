@@ -11,6 +11,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -21,6 +23,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -41,7 +44,22 @@ public class Inscription extends JDialog{
 	private Dimension dimLabel = new Dimension(100,25);
 	private Dimension dimField = new Dimension(170,30);
 	private JLabel timeLabel = new JLabel();
-	
+	private JTextField firstNameField = new JTextField();
+	private JTextField lastNameField = new JTextField();
+	private JFormattedTextField ageField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+	private JRadioButton masculin = new JRadioButton("Masculin");
+	private JRadioButton feminin = new JRadioButton("Feminin");
+	private JTextArea adressField = new JTextArea();
+	private	JCheckBox sport = new JCheckBox("sport");
+	private	JCheckBox musique = new JCheckBox("musique");
+	private	JCheckBox lecture = new JCheckBox("lecture");
+	private	JCheckBox danse = new JCheckBox("danse");
+	private	JFormattedTextField phoneField = new JFormattedTextField();
+	private	JTextField emailField = new JTextField();
+	private String pays[] = {"Niger", "Soudan", "Burkina", "Mali", "Cote D'ivoire"};
+	private	JComboBox<String> paysBox = new JComboBox<String>(pays);
+	private UserInfos infos ;
+ 	// le constructeur 
 	public Inscription(JFrame parent, String title, Boolean modal) {
 			super(parent, title, modal);
 			this.setSize(700,450);
@@ -50,7 +68,7 @@ public class Inscription extends JDialog{
 			title();
 			initComponent();
 			controlButtons();	
-			
+
 			Thread t = new Thread(new Runnable() {
 				public void run() {
 					temps();
@@ -70,40 +88,36 @@ public class Inscription extends JDialog{
 	}
 	
 	private void initComponent() {
-		//le nom
+	//le nom
 		JPanel firstNamePane = new JPanel();
 		JLabel firstNameLabel = new JLabel("first Name: ");
-		JTextField firstNameField = new JTextField();
 		firstNamePane.add(firstNameLabel);
 		firstNamePane.add(firstNameField);
 		firstNameLabel.setPreferredSize(dimLabel);
 		firstNameField.setPreferredSize(dimField);
 		
-		//le prenom 
+	//le prenom 
 		JPanel lastNamePane = new JPanel();
 		JLabel lastNameLabel = new JLabel("last Name: ");
-		JTextField lastNameField = new JTextField();
 		lastNamePane.add(lastNameLabel);
 		lastNamePane.add(lastNameField);
 		lastNameLabel.setPreferredSize(dimLabel);
 		lastNameField.setPreferredSize(dimField);
 		
-		//l'age
+	//l'age
 		JPanel agePane = new JPanel();
 		JLabel ageLabel = new JLabel("Age: ");
-		JFormattedTextField ageField = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		agePane.add(ageLabel);
 		agePane.add(ageField);
 		ageLabel.setPreferredSize(dimLabel);
 		ageField.setPreferredSize(dimField);
+		ageField.setValue(18);
 		
-		//le sexe
+	//le sexe
 		String[] sexe = {"Feminin","Masculin","Imbecile"};
 		JPanel sexePane = new JPanel();
 		JPanel sexeChoice = new JPanel();
 		JLabel sexeLabel = new JLabel("Sexe: ");
-		JRadioButton masculin = new JRadioButton("Masculin");
-		JRadioButton feminin = new JRadioButton("Feminin");
 		
 		ButtonGroup sexeGroup = new ButtonGroup();
 		
@@ -118,10 +132,9 @@ public class Inscription extends JDialog{
 		sexePane.add(sexeChoice);
 		
 		
-		//l'adresse
+	//l'adresse
 		JPanel addressPane = new JPanel();
 		JLabel addressLabel = new JLabel("adress: ");
-		JTextArea adressField = new JTextArea();
 		addressPane.add(addressLabel);
 		addressPane.setPreferredSize(new Dimension(285,70));
 		addressPane.add(new JScrollPane(adressField));
@@ -130,15 +143,11 @@ public class Inscription extends JDialog{
 		adressField.setPreferredSize(new Dimension(170, 65));
 		
 		
-		//Loisirs	pan1.setBorder(BorderFactory.createLineBorder(Color.black));
+	//Loisirs	pan1.setBorder(BorderFactory.createLineBorder(Color.black));
 		JPanel loisirPane = new JPanel();
 		JPanel choicePane = new JPanel();
 		JLabel loisirLabel = new JLabel("Hobbies :");
 		
-		JCheckBox sport = new JCheckBox("sport");
-		JCheckBox musique = new JCheckBox("musique");
-		JCheckBox lecture = new JCheckBox("lecture");
-		JCheckBox danse = new JCheckBox("danse");
 	
 			
 		choicePane.setPreferredSize(new Dimension(170,70));
@@ -152,11 +161,10 @@ public class Inscription extends JDialog{
 		
 		loisirLabel.setPreferredSize(dimLabel);
 		
-		//phone 
+	//phone 
 		JPanel phonePane = new JPanel();
 		JLabel phoneLabel = new JLabel("Phone: ");
 		MaskFormatter phoneFormat;
-		JFormattedTextField phoneField;
 		try {
 			
 			 phoneFormat = new MaskFormatter("+249-##-##-##-##-##");
@@ -170,20 +178,18 @@ public class Inscription extends JDialog{
 		}
 		
 		
-		//L'email 
+	//L'email 
 		JPanel emailPane = new JPanel();
 		JLabel emailLabel = new JLabel("Email: ");
-		JTextField emailField = new JTextField();
 		emailPane.add(emailLabel);
 		emailPane.add(emailField);
 		emailLabel.setPreferredSize(dimLabel);
 		emailField.setPreferredSize(dimField);
 		
-		//le pays
-		String pays[] = {"Niger", "Soudan", "Burkina", "Mali", "Cote D'ivoire"};
+	//le pays
+
 		JPanel nationPane = new JPanel();
 		JLabel paysLabel = new JLabel("Nation");
-		JComboBox<String> paysBox = new JComboBox<String>(pays);
 		paysBox.setSelectedIndex(1);
 		nationPane.add(paysLabel);
 		nationPane.add(paysBox);
@@ -213,13 +219,14 @@ public class Inscription extends JDialog{
 		container.add(timeLabel);
 	}//end of initComponent();
 	
+	//methode du panel des boutons de control
 	private void controlButtons() {
 		JButton submit = new JButton("submit");
-//action du bouton submit
-		
+	//action du bouton submit
+		submit.addActionListener(new SubmitListener());
 		
 		JButton cancel = new JButton("cancel");
-//		action du bouton cancel
+	//		action du bouton cancel
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -229,6 +236,7 @@ public class Inscription extends JDialog{
 		buttonPane.add(cancel); 
 	}
 	
+	//affichage du temps actuel juste en dessous du formulaire
 	private void temps() {
 		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd-MM-YYYY HH:mm:ss");
 		while(true) {
@@ -239,6 +247,34 @@ public class Inscription extends JDialog{
 			}catch(InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+//ecouteur du bouton submit
+	JOptionPane messageOption;
+	private class SubmitListener implements ActionListener{
+		public void actionPerformed(ActionEvent event) {
+			List<String> hobbies = new ArrayList<String>();
+			String fname = firstNameField.getText();
+			String lname = lastNameField.getText();
+			String age = ageField.getText();
+		
+			String sexe = masculin.isSelected() ? masculin.getText() :
+					   feminin.isSelected() ? feminin.getText():
+					   masculin.getText(); 
+		
+			String adress = adressField.getText();
+			String phone = phoneField.getText();
+			String email = emailField.getText();
+			String nation = paysBox.getSelectedItem().toString();
+			
+			if(sport.isSelected()) hobbies.add(sport.getText());
+			if(musique.isSelected()) hobbies.add(musique.getText());
+			if(lecture.isSelected()) hobbies.add(lecture.getText());
+			if(danse.isSelected()) hobbies.add(danse.getText());
+
+			infos = new UserInfos(fname, lname, age, sexe, adress, phone, email, nation, hobbies);
+			JOptionPane.showMessageDialog(null,infos.toString(), "information utilisateur",JOptionPane.INFORMATION_MESSAGE); 
 		}
 	}
 }
