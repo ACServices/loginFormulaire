@@ -1,8 +1,10 @@
 package formulaireProject;
 
+import java.io.Serializable;
+
 import javax.swing.table.AbstractTableModel;
 
-public class Tableau extends AbstractTableModel {
+public class Tableau extends AbstractTableModel implements Serializable{
 	Object[][]datas;
 	String[] title;
 	
@@ -33,5 +35,5 @@ public class Tableau extends AbstractTableModel {
 		}
 		
 		
-}//end of class
+} //end of class
 
