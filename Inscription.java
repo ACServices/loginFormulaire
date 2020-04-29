@@ -68,7 +68,8 @@ public class Inscription extends JDialog implements Serializable{
 	private UserInfos infos = new UserInfos();
 	private Donnees donnees = new Donnees();
 	protected static File fichier = new File("/home/nabirni/eclipse-workspace/formulaireProject/src/formulaireProject/files/datas.txt");
- 	// le constructeur 
+ 	
+	// le constructeur 
 	public Inscription(JFrame parent, String title, Boolean modal) {
 			super(parent, title, modal);
 			this.setSize(700,450);

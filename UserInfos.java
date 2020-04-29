@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserInfos implements Serializable{
+	
 	private String f_name = "", l_name ="", sexe = "",phone="", email="", nation="", adress = "";
 	private List<String> hobbies = new ArrayList<String>();
 	private String age = "";
