@@ -3,7 +3,6 @@ package formulaireProject;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.io.Serializable;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;

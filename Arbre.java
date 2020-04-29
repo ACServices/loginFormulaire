@@ -8,9 +8,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class Arbre extends JPanel{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JTree arbre;
 	private DefaultMutableTreeNode racine = new DefaultMutableTreeNode();

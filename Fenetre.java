@@ -81,7 +81,7 @@ public class Fenetre extends JFrame implements Serializable{
 		this.getContentPane().add(toolbar, BorderLayout.NORTH);
 		this.getContentPane().add(splitPane, BorderLayout.CENTER);
 }
-//=========================END OF CONSTRUCTOR
+//========================END OF CONSTRUCTOR
 	
 	private void menu() {
 		JMenu file = new JMenu("fichier");

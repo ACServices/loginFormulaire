@@ -35,5 +35,5 @@ public class Tableau extends AbstractTableModel implements Serializable{
 		}
 		
 		
-}//end of class
+} //end of class
 
