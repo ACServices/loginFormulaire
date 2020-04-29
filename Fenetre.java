@@ -2,7 +2,7 @@ package formulaireProject;
 
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 
@@ -40,7 +41,9 @@ public class Fenetre extends JFrame{
 			};
 
 	private JSplitPane splitPane;
-	
+	private JTabbedPane onglets;
+	private Donnees lesDonnees = new Donnees();
+	private Font police = new Font("Arial", Font.CENTER_BASELINE, 25);
 	public Fenetre() {
 		this.setTitle("liste des abonnes");
 		this.setSize(1000, 600);
@@ -56,7 +59,12 @@ public class Fenetre extends JFrame{
 		this.setJMenuBar(menuBar);
 //		tableau.setBackground(new Color(231, 233, 242));
 		
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new Arbre(), tableau);
+		lesDonnees.setEditable(false);
+		lesDonnees.setFont(police);
+		onglets = new JTabbedPane();
+		onglets.add("Tableau", tableau);
+		onglets.add("donnees", lesDonnees);
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new Arbre(), onglets);
 		splitPane.setOneTouchExpandable(false);
 		splitPane.setDividerSize(5);
 		splitPane.setDividerLocation(175);
