@@ -7,6 +7,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -31,7 +38,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-public class Inscription extends JDialog{
+public class Inscription extends JDialog implements Serializable{
 	/**
 	 * 
 	 */
@@ -58,7 +65,9 @@ public class Inscription extends JDialog{
 	private	JTextField emailField = new JTextField();
 	private String pays[] = {"Niger", "Soudan", "Burkina", "Mali", "Cote D'ivoire"};
 	private	JComboBox<String> paysBox = new JComboBox<String>(pays);
-	private UserInfos infos ;
+	private UserInfos infos = new UserInfos();
+	private Donnees donnees = new Donnees();
+	protected static File fichier = new File("/home/nabirni/eclipse-workspace/formulaireProject/src/formulaireProject/files/datas.txt");
  	// le constructeur 
 	public Inscription(JFrame parent, String title, Boolean modal) {
 			super(parent, title, modal);
@@ -249,7 +258,11 @@ public class Inscription extends JDialog{
 			}
 		}
 	}
-
+	
+//	methode pour sauvegarder les donnees dans un fichier
+	private void saveOnFile() {
+		
+	}
 //ecouteur du bouton submit
 	JOptionPane messageOption;
 	private class SubmitListener implements ActionListener{
@@ -274,7 +287,19 @@ public class Inscription extends JDialog{
 			if(danse.isSelected()) hobbies.add(danse.getText());
 
 			infos = new UserInfos(fname, lname, age, sexe, adress, phone, email, nation, hobbies);
-			JOptionPane.showMessageDialog(null,infos.toString(), "information utilisateur",JOptionPane.INFORMATION_MESSAGE); 
+			JOptionPane.showMessageDialog(null,infos.toString(), "information utilisateur",JOptionPane.INFORMATION_MESSAGE);
+
+//ecrire les donnees dans un fichier
+			try(FileOutputStream fos = new FileOutputStream(fichier);
+					BufferedOutputStream bos = new BufferedOutputStream(fos);
+					 ObjectOutputStream oos  = new ObjectOutputStream(bos)){
+						oos.writeObject(infos);
+						oos.close();
+			}catch(FileNotFoundException fnfe) {
+				System.err.println("fichier introuvable");
+			}catch(IOException ioe) {
+				System.err.println("probleme d'ecriture dans le fichier");
+			}
 		}
 	}
 }

@@ -5,6 +5,13 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,9 +25,11 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 //la fenetre principale
-public class Fenetre extends JFrame{
+public class Fenetre extends JFrame implements Serializable{
 	/**
 	 * 
 	 */
@@ -42,8 +51,10 @@ public class Fenetre extends JFrame{
 
 	private JSplitPane splitPane;
 	private JTabbedPane onglets;
-	private Donnees lesDonnees = new Donnees();
-	private Font police = new Font("Arial", Font.CENTER_BASELINE, 25);
+	
+	protected  File fichier = new File("/home/nabirni/eclipse-workspace/formulaireProject/src/formulaireProject/files/data");
+	private Donnees lesDonnees;
+//START OF CONSTRUCTOR
 	public Fenetre() {
 		this.setTitle("liste des abonnes");
 		this.setSize(1000, 600);
@@ -59,11 +70,9 @@ public class Fenetre extends JFrame{
 		this.setJMenuBar(menuBar);
 //		tableau.setBackground(new Color(231, 233, 242));
 		
-		lesDonnees.setEditable(false);
-		lesDonnees.setFont(police);
-		onglets = new JTabbedPane();
-		onglets.add("Tableau", tableau);
-		onglets.add("donnees", lesDonnees);
+
+		onglet();
+		
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new Arbre(), onglets);
 		splitPane.setOneTouchExpandable(false);
 		splitPane.setDividerSize(5);
@@ -71,8 +80,9 @@ public class Fenetre extends JFrame{
 		
 		this.getContentPane().add(toolbar, BorderLayout.NORTH);
 		this.getContentPane().add(splitPane, BorderLayout.CENTER);
-	}
-
+}
+//=========================END OF CONSTRUCTOR
+	
 	private void menu() {
 		JMenu file = new JMenu("fichier");
 		JMenu edition = new JMenu("Edition");
@@ -124,6 +134,36 @@ public class Fenetre extends JFrame{
 //				}
 //			}
 //		});
+		
+	}
+	
+	private void onglet() {
+		
+		onglets = new JTabbedPane();
+		
+		onglets.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent event) {
+				try(FileInputStream fis = new FileInputStream(Inscription.fichier);
+						BufferedInputStream bis = new BufferedInputStream (fis);
+						 ObjectInputStream ois = new ObjectInputStream(bis)){
+							UserInfos infos = (UserInfos)ois.readObject();
+							lesDonnees = new Donnees(infos.toString());
+						ois.close();
+				} catch (FileNotFoundException e) {
+					System.err.println("fichier introuvable");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.err.println("probleme de lecture du fichier");
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					System.err.println("aucune sauvegarde trouvee");
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		onglets.add("Tableau", tableau);
+		onglets.add("donnees", lesDonnees);
 		
 	}
 }
