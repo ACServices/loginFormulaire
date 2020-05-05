@@ -2,7 +2,6 @@ package formulaireProject;
 
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -21,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -33,12 +33,14 @@ public class Fenetre extends JFrame implements Serializable{
 	/**
 	 * 
 	 */
+	protected  File fichier = new File("/home/nabirni/eclipse-workspace/formulaireProject/src/formulaireProject/files/data");
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menuBar = new JMenuBar();
 	private JToolBar toolbar = new JToolBar();
 	private JPopupMenu popupMenu = new JPopupMenu();
 	private JPanel centerContainer = new JPanel();
 	private JTable tableau;
+	
 	private String[] titres = {"id","nom","prenom","pays","adress","email","phone"};
 	private Object[][] donnees = {
 			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
@@ -51,9 +53,9 @@ public class Fenetre extends JFrame implements Serializable{
 
 	private JSplitPane splitPane;
 	private JTabbedPane onglets;
-	
-	protected  File fichier = new File("/home/nabirni/eclipse-workspace/formulaireProject/src/formulaireProject/files/data");
 	private Donnees lesDonnees;
+	private JButton btnAjouterLigne = new JButton("ajouter une ligne");
+	
 //START OF CONSTRUCTOR
 	public Fenetre() {
 		this.setTitle("liste des abonnes");
@@ -78,12 +80,15 @@ public class Fenetre extends JFrame implements Serializable{
 		splitPane.setDividerSize(5);
 		splitPane.setDividerLocation(175);
 		
+		btnAjouterLigne.addActionListener(new AjouterLigne());
+		
 		this.getContentPane().add(toolbar, BorderLayout.NORTH);
 		this.getContentPane().add(splitPane, BorderLayout.CENTER);
+		this.getContentPane().add(btnAjouterLigne, BorderLayout.SOUTH);
 }
 //========================END OF CONSTRUCTOR
 	
-	private void menu() {
+private void menu() {
 		JMenu file = new JMenu("fichier");
 		JMenu edition = new JMenu("Edition");
 		JMenu options = new JMenu("Options");
@@ -162,8 +167,17 @@ public class Fenetre extends JFrame implements Serializable{
 			}
 		});
 		
-		onglets.add("Tableau", tableau);
+		onglets.add("Tableau", new JScrollPane(tableau));
 		onglets.add("donnees", lesDonnees);
 		
 	}
+
+//listener pour ajouter une nouvelle ligne de donnees
+private class AjouterLigne implements ActionListener{
+		public void actionPerformed(ActionEvent event ) {
+		Object[] donnee =
+			{7,"NouvelleLigne", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681};
+		((Tableau)tableau.getModel()).addRow(donnee);
+	}
+}
 }
