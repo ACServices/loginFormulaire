@@ -2,6 +2,7 @@ package formulaireProject;
 
 import java.io.Serializable;
 
+import javax.swing.JButton;
 import javax.swing.table.AbstractTableModel;
 
 public class Tableau extends AbstractTableModel implements Serializable{
@@ -30,8 +31,31 @@ public class Tableau extends AbstractTableModel implements Serializable{
 			return this.title[x];
 		}
 		
+		public Class setValueAt(int row, int col) {
+			return this.datas[row][col].getClass();
+		}
+		
 		public boolean isCellEditable(int row, int col) {
+			if(getValueAt(0, col) instanceof JButton)
+			return false;
 			return true;
+		}
+		
+		public void addRow(Object[] donnee) {
+			int oldRowCount = this.getRowCount();
+			int oldColCount = this.getColumnCount();
+			int index = 0;
+			
+			Object[][] temp = this.datas;
+			this.datas = new Object[oldRowCount+1][oldColCount];
+			
+			for(Object[] value : temp)
+				this.datas[index++] = value;
+			
+			this.datas[index] = donnee;
+			temp = null;
+			
+			this.fireTableDataChanged();
 		}
 		
 		
