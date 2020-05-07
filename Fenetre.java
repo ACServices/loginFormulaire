@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -41,16 +43,18 @@ public class Fenetre extends JFrame implements Serializable{
 	private JPopupMenu popupMenu = new JPopupMenu();
 	private JPanel centerContainer = new JPanel();
 	private JTable tableau;
-	
+	private JComboBox paysBox;
+	private String listPays[] = {"Niger", "Mali", "Burkina", "Soudan"};
 	private String[] titres = {"id","nom","prenom","pays","adress","email","phone","suppression"};
 	private Object[][] donnees = {
-			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
-			{2,"Ali", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
-			{3,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
-			{4,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
-			{5,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
-			{6,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{1,"Moussa", "Ismael",listPays[0],"Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{2,"Ali", "Ismael",listPays[0],"Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{3,"Moussa", "Ismael",listPays[0],"Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{4,"Moussa", "Ismael",listPays[0],"Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{5,"Moussa", "Ismael",listPays[0],"Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{6,"Moussa", "Ismael",listPays[0],"Kharthoum","ismael@gmail.com",118322681,"delete"},
 			};
+	
 
 	private JSplitPane splitPane;
 	private JTabbedPane onglets;
@@ -68,20 +72,7 @@ public class Fenetre extends JFrame implements Serializable{
 		toolbar();
 		popupMenu();
 		
-			tableau = new JTable(new Tableau(donnees, titres));
-			tableau.setRowHeight(35);
-			this.tableau.getColumn("suppression").setCellEditor(new SuppButtonEditor(new JCheckBox()));
-	//		tableau.setBackground(new Color(231, 233, 242));
-			
-	
-			onglet();
-			
-			splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new Arbre(), onglets);
-			splitPane.setOneTouchExpandable(false);
-			splitPane.setDividerSize(5);
-			splitPane.setDividerLocation(175);
-			
-			btnAjouterLigne.addActionListener(new AjouterLigne());
+		initComponent();
 		this.setJMenuBar(menuBar);
 		this.getContentPane().add(toolbar, BorderLayout.NORTH);
 		this.getContentPane().add(splitPane, BorderLayout.CENTER);
@@ -89,6 +80,24 @@ public class Fenetre extends JFrame implements Serializable{
 }
 //========================END OF CONSTRUCTOR
 	
+private void initComponent() {
+	tableau = new JTable(new Tableau(donnees, titres));
+	tableau.setRowHeight(35);
+	paysBox = new JComboBox(listPays);
+	this.tableau.getColumn("suppression").setCellEditor(new SuppButtonEditor(new JCheckBox()));
+	this.tableau.getColumn("pays").setCellEditor(new DefaultCellEditor(paysBox));
+//		tableau.setBackground(new Color(231, 233, 242));
+	
+
+	onglet();
+	
+	splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new Arbre(), onglets);
+	splitPane.setOneTouchExpandable(false);
+	splitPane.setDividerSize(5);
+	splitPane.setDividerLocation(175);
+	
+	btnAjouterLigne.addActionListener(new AjouterLigne());
+}
 private void menu() {
 		JMenu file = new JMenu("fichier");
 		JMenu edition = new JMenu("Edition");
