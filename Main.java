@@ -7,7 +7,6 @@ public class Main {
 		Runnable run = () -> {new Connexion();};
 		Thread threadConnexion = new Thread(run);
 		threadConnexion.start();
-
 	}
 
 }

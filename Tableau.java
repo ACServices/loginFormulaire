@@ -41,6 +41,7 @@ public class Tableau extends AbstractTableModel implements Serializable{
 			return true;
 		}
 		
+//ajouter une nouvelle ligne de donnee
 		public void addRow(Object[] donnee) {
 			int oldRowCount = this.getRowCount();
 			int oldColCount = this.getColumnCount();
@@ -56,6 +57,27 @@ public class Tableau extends AbstractTableModel implements Serializable{
 			temp = null;
 			
 			this.fireTableDataChanged();
+		}
+		
+//supprimer une ligne de donnee
+		public void deleteRow(int position) {
+			int indexVerifiant = 0 ; int indexAjoutant = 0;
+			int oldRowCount = this.getRowCount();
+			int oldColCount = this.getColumnCount();
+			
+			Object[][] temp = new Object[oldRowCount-1][oldColCount];
+			
+			for(Object[] value : this.datas) {
+				if(indexVerifiant != position)
+					temp[indexAjoutant++] = value;
+				
+				indexVerifiant++;
+			}
+			this.datas = temp;
+			temp = null;
+			
+			this.fireTableDataChanged();
+			
 		}
 		
 		
