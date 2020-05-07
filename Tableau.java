@@ -76,6 +76,8 @@ public class Tableau extends AbstractTableModel implements Serializable{
 			this.datas = temp;
 			temp = null;
 			
+			this.fireTableDataChanged();
+			
 		}
 		
 		

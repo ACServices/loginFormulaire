@@ -14,6 +14,7 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -41,14 +42,14 @@ public class Fenetre extends JFrame implements Serializable{
 	private JPanel centerContainer = new JPanel();
 	private JTable tableau;
 	
-	private String[] titres = {"id","nom","prenom","pays","adress","email","phone"};
+	private String[] titres = {"id","nom","prenom","pays","adress","email","phone","suppression"};
 	private Object[][] donnees = {
-			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{2,"Ali", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{3,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{4,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{5,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
-			{6,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681},
+			{1,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{2,"Ali", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{3,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{4,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{5,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
+			{6,"Moussa", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"},
 			};
 
 	private JSplitPane splitPane;
@@ -67,21 +68,21 @@ public class Fenetre extends JFrame implements Serializable{
 		toolbar();
 		popupMenu();
 		
-		tableau = new JTable(new Tableau(donnees, titres));
-		tableau.setRowHeight(35);
+			tableau = new JTable(new Tableau(donnees, titres));
+			tableau.setRowHeight(35);
+			this.tableau.getColumn("suppression").setCellEditor(new SuppButtonEditor(new JCheckBox()));
+	//		tableau.setBackground(new Color(231, 233, 242));
+			
+	
+			onglet();
+			
+			splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new Arbre(), onglets);
+			splitPane.setOneTouchExpandable(false);
+			splitPane.setDividerSize(5);
+			splitPane.setDividerLocation(175);
+			
+			btnAjouterLigne.addActionListener(new AjouterLigne());
 		this.setJMenuBar(menuBar);
-//		tableau.setBackground(new Color(231, 233, 242));
-		
-
-		onglet();
-		
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new Arbre(), onglets);
-		splitPane.setOneTouchExpandable(false);
-		splitPane.setDividerSize(5);
-		splitPane.setDividerLocation(175);
-		
-		btnAjouterLigne.addActionListener(new AjouterLigne());
-		
 		this.getContentPane().add(toolbar, BorderLayout.NORTH);
 		this.getContentPane().add(splitPane, BorderLayout.CENTER);
 		this.getContentPane().add(btnAjouterLigne, BorderLayout.SOUTH);
@@ -176,7 +177,7 @@ private void menu() {
 private class AjouterLigne implements ActionListener{
 		public void actionPerformed(ActionEvent event ) {
 		Object[] donnee =
-			{7,"NouvelleLigne", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681};
+			{7,"NouvelleLigne", "Ismael","Soudan","Kharthoum","ismael@gmail.com",118322681,"delete"};
 		((Tableau)tableau.getModel()).addRow(donnee);
 	}
 }
