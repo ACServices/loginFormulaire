@@ -32,11 +32,16 @@ public class Tableau extends AbstractTableModel implements Serializable{
 		}
 		
 		public void setValueAt(Object value, int row, int col) {
-			this.datas[row][col] = value;
+			if(!this.getColumnName(col).equals("suppression"))
+				this.datas[row][col] = value;
+		}
+		
+		public Class getColumnClass(int col) {
+			return this.datas[0][col].getClass();
 		}
 		
 		public boolean isCellEditable(int row, int col) {
-			if(getValueAt(0, col) instanceof JButton)
+			if(this.getValueAt(0, col) instanceof JButton)
 			return false;
 			return true;
 		}
@@ -62,10 +67,10 @@ public class Tableau extends AbstractTableModel implements Serializable{
 //supprimer une ligne de donnee
 		public void deleteRow(int position) {
 			int indexVerifiant = 0 ; int indexAjoutant = 0;
-			int oldRowCount = this.getRowCount();
+			int oldRowCount = this.getRowCount()-1;
 			int oldColCount = this.getColumnCount();
 			
-			Object[][] temp = new Object[oldRowCount-1][oldColCount];
+			Object[][] temp = new Object[oldRowCount][oldColCount];
 			
 			for(Object[] value : this.datas) {
 				if(indexVerifiant != position)
