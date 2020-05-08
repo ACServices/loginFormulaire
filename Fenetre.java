@@ -30,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 //la fenetre principale
 public class Fenetre extends JFrame implements Serializable{
@@ -86,6 +87,7 @@ private void initComponent() {
 	paysBox = new JComboBox(listPays);
 	this.tableau.getColumn("suppression").setCellEditor(new SuppButtonEditor(new JCheckBox()));
 	this.tableau.getColumn("pays").setCellEditor(new DefaultCellEditor(paysBox));
+	this.tableau.getColumn("pays").setCellRenderer(new DefaultTableCellRenderer());
 //		tableau.setBackground(new Color(231, 233, 242));
 	
 

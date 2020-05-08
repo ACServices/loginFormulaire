@@ -32,7 +32,7 @@ public class Tableau extends AbstractTableModel implements Serializable{
 		}
 		
 		public void setValueAt(Object value, int row, int col) {
-			if(!this.getColumnName(col).equals("Suppression"))
+			if(!this.getColumnName(col).equals("suppression"))
 				this.datas[row][col] = value;
 		}
 		
@@ -41,6 +41,8 @@ public class Tableau extends AbstractTableModel implements Serializable{
 		}
 		
 		public boolean isCellEditable(int row, int col) {
+			if(this.getValueAt(0, col) instanceof JButton)
+			return false;
 			return true;
 		}
 		
