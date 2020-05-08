@@ -31,8 +31,8 @@ public class Tableau extends AbstractTableModel implements Serializable{
 			return this.title[x];
 		}
 		
-		public Class setValueAt(int row, int col) {
-			return this.datas[row][col].getClass();
+		public void setValueAt(Object value, int row, int col) {
+			this.datas[row][col] = value;
 		}
 		
 		public boolean isCellEditable(int row, int col) {
