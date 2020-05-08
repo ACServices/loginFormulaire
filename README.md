@@ -7,3 +7,7 @@ toute remarque ou suggestion serait la bienvenue ! merci !
 //pour le commit sur la correction du probleme relatif au bouton supprimer
 il n'y avait aucune reaction lorsqu'on cliquait sur le bouton supprimer car j'avais appele la mauvaise methode abstraite
 getTableCellEditor. la methode correcte etait celle sans argument boolean hasFocus.
+
+//le bug concernant le combobox etait au fait que je n'avais pas redefinie correctement la methode setValueAt()
+
+
